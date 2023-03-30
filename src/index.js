@@ -1,6 +1,9 @@
 const pupsUrl = "http://localhost:3000/pups/"
 const divDogBar = document.getElementById('dog-bar')
 const divDogInfo = document.getElementById('dog-info')
+const btnFilterDog = document.getElementById('good-dog-filter')
+let isFilterGoodDogOff = true 
+
 function fetchPups() {
     fetch(pupsUrl)
     .then(r => r.json())
@@ -69,3 +72,15 @@ function patchPup(pup, btnPup) {
 
 }
 
+//FILTER GOOD DOGS
+btnFilterDog.onclick = (event) => {
+    if (isFilterGoodDogOff) {
+        btnFilterDog.textContent = "Filter good dogs: ON"
+        isFilterGoodDogOff = false 
+        
+    } else {
+        btnFilterDog.textContent = "Filter good dogs: OFF"
+        isFilterGoodDogOff = true 
+    }
+
+}
