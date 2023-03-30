@@ -4,13 +4,13 @@ const divDogInfo = document.getElementById('dog-info')
 const btnFilterDog = document.getElementById('good-dog-filter')
 let isFilterGoodDogOff = true 
 
-function fetchPups() {
+function fetchAllPups() {
     fetch(pupsUrl)
     .then(r => r.json())
     .then(pups => pups.forEach(pup => addPup(pup)))
 }
 
-fetchPups()
+fetchAllPups()
 
 function addPup(pup) {
     // console.log(pup)
@@ -76,11 +76,25 @@ function patchPup(pup, btnPup) {
 btnFilterDog.onclick = (event) => {
     if (isFilterGoodDogOff) {
         btnFilterDog.textContent = "Filter good dogs: ON"
-        isFilterGoodDogOff = false 
-        
+        isFilterGoodDogOff = false
+        clearDiv(divDogBar) 
+        fetchGoodPups()
+
     } else {
         btnFilterDog.textContent = "Filter good dogs: OFF"
         isFilterGoodDogOff = true 
+        clearDiv(divDogBar)
+        fetchAllPups()
     }
 
+}
+
+function fetchGoodPups() {
+    fetch(pupsUrl)
+    .then(r => r.json())
+    .then(pups => pups.forEach(pup => {
+        if (pup.isGoodDog) {
+            addPup(pup)
+        }
+    }))
 }
